@@ -12,4 +12,9 @@
             </intent-filter>
         </activity>
     </application>
-</manifest> 
+    <uses-sdk android:minSdkVersion="4"
+              android:targetSdkVersion="4" />
+    <supports-screens android:anyDensity="true" />
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+</manifest>
