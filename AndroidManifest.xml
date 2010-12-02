@@ -9,9 +9,20 @@
                   android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+                <action android:name="com.pepsdev.timedlight.illuminate30" />
+                <action android:name="com.pepsdev.timedlight.illuminate60" />
+                <action android:name="com.pepsdev.timedlight.illuminate120" />
                 <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <receiver android:name="TimedLightWidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                       android:resource="@xml/timedlight_widget_info" />
+        </receiver>
     </application>
     <uses-sdk android:minSdkVersion="4"
               android:targetSdkVersion="4" />

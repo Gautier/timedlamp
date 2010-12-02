@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:minWidth="148dp"
+    android:minHeight="49dp"
+    android:updatePeriodMillis="86400000"
+    android:initialLayout="@layout/timedlight_widget_layout">
+</appwidget-provider>
