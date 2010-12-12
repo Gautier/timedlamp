@@ -11,9 +11,7 @@
                   android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <action android:name="com.pepsdev.timedlight.illuminate30" />
-                <action android:name="com.pepsdev.timedlight.illuminate60" />
-                <action android:name="com.pepsdev.timedlight.illuminate120" />
+                <action android:name="com.pepsdev.timedlight.illuminate" />
                 <category android:name="android.intent.category.LAUNCHER" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>

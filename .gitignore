@@ -2,3 +2,6 @@ build/
 build.properties
 local.properties
 *.un~
+bin/
+gen/
+proguard.cfg
