@@ -6,7 +6,9 @@
     <application android:label="@string/app_name">
         <activity android:name="TimedLight"
                   android:theme="@android:style/Theme.NoTitleBar"
-                  android:label="@string/app_name">
+                  android:icon="@drawable/bonhomme"
+                  android:label="@string/app_name"
+                  android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="com.pepsdev.timedlight.illuminate30" />
