@@ -47,7 +47,7 @@ public class TimedLightView extends SurfaceView
     private Bitmap lamp_hl;
     private Bitmap handle;
 
-    private static final int HANDLE_DURATION = 3000;
+    private static final int HANDLE_DURATION = 1000 * 120; // 2 mins
 
     /* Following constants are density dependants
      * This is why they are not final
