@@ -46,19 +46,20 @@ public class TimedLightView extends SurfaceView
     private Bitmap lamp;
     private Bitmap lamp_hl;
     private Bitmap handle;
+	private int handleHeight;
 
     private static final int HANDLE_DURATION = 1000 * 120; // 2 mins
 
     /* Following constants are density dependants
      * This is why they are not final
      */
-    private int HANDLE_POS_STOP = 346;
-    private int HANDLE_POS_DEFAULT = 332;
-    private int HANDLE_POS_X = 180;
-    private int HANDLE_POS_MAX = 536;
-    private Rect touchBox = new Rect(128, 300, 290, 665);
+    //private int HANDLE_POS_STOP = 346;
+    private int HANDLE_POS_DEFAULT;
+    private int HANDLE_POS_X;
+    private int HANDLE_POS_MAX;
+    private Rect touchBox;
 
-    private int handlePos = HANDLE_POS_DEFAULT;
+    private int handlePos; // bottom of the handle
     private boolean listeningToScroll = false;
 
     private MediaPlayer mpClick = null;
@@ -81,7 +82,7 @@ public class TimedLightView extends SurfaceView
     public void tick(long ms) {
         setTiretteDuration(ms);
 
-        if (handlePos <= HANDLE_POS_STOP) {
+        if (handlePos <= HANDLE_POS_DEFAULT) {
             if (tiretteListener != null) {
                 tiretteListener.unTiretted();
             }
@@ -90,7 +91,7 @@ public class TimedLightView extends SurfaceView
 
     public void doDraw(Canvas c) {
         c.drawARGB(255, 255, 255, 255);
-        c.drawBitmap(handle, HANDLE_POS_X, handlePos, null);
+        c.drawBitmap(handle, HANDLE_POS_X, handlePos - handleHeight, null);
         c.drawBitmap(currentLamp, 0, 0, null);
     }
 
@@ -119,10 +120,8 @@ public class TimedLightView extends SurfaceView
     public void setTiretteDuration(long ms) {
         double pxPerMs = (double)(HANDLE_POS_MAX - HANDLE_POS_DEFAULT) /
                          (double) HANDLE_DURATION;
-        Log.d(TAG, "setTiretteDuration pxPerMs " + pxPerMs);
 
         handlePos = HANDLE_POS_DEFAULT + (int)(ms * pxPerMs);
-        Log.d(TAG, "setTiretteDuration " + handlePos);
         draw();
     }
 
@@ -149,16 +148,6 @@ public class TimedLightView extends SurfaceView
         mSurfaceHolder = getHolder();
         mSurfaceHolder.addCallback(this);
 
-        mDensity = density / 1.5f;
-
-        HANDLE_POS_STOP = (int)(346 * mDensity);
-        HANDLE_POS_DEFAULT = (int)(332 * mDensity);
-        handlePos = HANDLE_POS_DEFAULT;
-        HANDLE_POS_X = (int)(180 * mDensity);
-        HANDLE_POS_MAX = (int)(536 * mDensity);
-
-        touchBox = new Rect((int)(128 * mDensity), (int)(300 * mDensity),
-                            (int)(290 * mDensity), (int)(665 * mDensity));
 
         lamp = BitmapFactory.decodeResource(getContext().getResources(),
                 R.drawable.lamp);
@@ -167,6 +156,18 @@ public class TimedLightView extends SurfaceView
         currentLamp = lamp;
         handle = BitmapFactory.decodeResource(getContext().getResources(),
                 R.drawable.handle);
+
+        handleHeight = handle.getHeight();
+
+        mDensity = density;
+
+        HANDLE_POS_DEFAULT = (int)(205 * mDensity);
+        handlePos = HANDLE_POS_DEFAULT;
+        HANDLE_POS_X = (int)(120 * mDensity);
+        HANDLE_POS_MAX = (int)(205 + (85 * 2) * mDensity);
+
+        touchBox = new Rect((int)(128 * mDensity), (int)(HANDLE_POS_DEFAULT - 90 * mDensity),
+                            (int)(290 * mDensity), (int)(lamp.getHeight()));
 
         gestureDetector = new GestureDetector(
                 new GestureDetector.SimpleOnGestureListener () {
@@ -201,7 +202,7 @@ public class TimedLightView extends SurfaceView
                             Log.d("TimedLightView", "ACTIONNNNNNNN UP");
                             playClick();
                             if (tiretteListener != null) {
-                                if (handlePos > HANDLE_POS_STOP) {
+                                if (handlePos > HANDLE_POS_DEFAULT) {
                                     tiretteListener.tiretted();
                                 } else {
                                     tiretteListener.unTiretted();
@@ -222,6 +223,8 @@ public class TimedLightView extends SurfaceView
             int height) {
         width = width;
         height = height;
+
+        touchBox.bottom = height;
     }
 
     @Override

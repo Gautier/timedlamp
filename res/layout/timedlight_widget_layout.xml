@@ -8,15 +8,15 @@
     android:id="@+id/button_30"
     android:background="@drawable/button_30sec"
     android:layout_width="49dp"
-    android:layout_height="49dp"/>
+    android:layout_height="59dp"/>
 <Button
     android:id="@+id/button_60"
     android:background="@drawable/button_1min"
     android:layout_width="49dp"
-    android:layout_height="49dp"/>
+    android:layout_height="59dp"/>
 <Button
     android:id="@+id/button_120"
-    android:background="@drawable/button_3min"
+    android:background="@drawable/button_2min"
     android:layout_width="49dp"
-    android:layout_height="49dp"/>
+    android:layout_height="59dp"/>
 </LinearLayout>
