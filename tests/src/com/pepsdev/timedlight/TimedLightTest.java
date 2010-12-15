@@ -27,10 +27,10 @@ public class TimedLightTest extends ActivityInstrumentationTestCase2<TimedLight>
     }
 
     public void testCountDown() {
-        assertTrue(!timedLightActivity.countDownStarted);
+        assertTrue(!timedLightActivity.tv.getCountDownStarted());
 
         timedLightActivity.startCountDown(1000);
 
-        assertTrue(timedLightActivity.countDownStarted);
+        assertTrue(timedLightActivity.tv.getCountDownStarted());
     }
 }

@@ -14,6 +14,8 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.media.MediaPlayer;
 
+import alt.android.os.CountDownTimer;
+
 import android.graphics.Rect;
 
 
@@ -21,6 +23,7 @@ public class TimedLightView extends SurfaceView
     implements SurfaceHolder.Callback {
 
     private static final String TAG = "com.pepsdev.timedlight";
+    private static final int SPT = 250; // seconds per tick
 
     public interface OnTiretteListener {
         public void tiretted();
@@ -35,6 +38,8 @@ public class TimedLightView extends SurfaceView
     private GestureDetector gestureDetector;
     private OnTiretteListener tiretteListener;
 
+    private CountDownTimer mCountDown;
+    public boolean mCoundDownStarted = false;
 
     private int width;
     private int height;
@@ -203,9 +208,9 @@ public class TimedLightView extends SurfaceView
                             playClick();
                             if (tiretteListener != null) {
                                 if (handlePos > HANDLE_POS_DEFAULT) {
-                                    tiretteListener.tiretted();
+                                    tiretted();
                                 } else {
-                                    tiretteListener.unTiretted();
+                                    unTiretted();
                                 }
                             }
                             listeningToScroll = false;
@@ -217,6 +222,54 @@ public class TimedLightView extends SurfaceView
                 }
         });
     }
+
+    public void tiretted() {
+        stopCountDown();
+        tiretteListener.tiretted();
+        startCountDown((int)getTiretteDuration());
+    }
+
+    public void unTiretted() {
+        stopCountDown();
+        tiretteListener.unTiretted();
+        switchOff();
+    }
+
+    public void startCountDown(long timeout) {
+        Log.d(TAG, "start with timeout " + timeout);
+        final long stopAt = System.currentTimeMillis() + timeout;
+        mCoundDownStarted = true;
+
+        mCountDown = new CountDownTimer(timeout, SPT) {
+            @Override
+            public void onTick(long ms) {
+                tick(ms);
+            }
+
+            @Override
+            public void onFinish() {
+                //switchOff();
+                //if (tiretteListener != null) {
+                //    tiretteListener.unTiretted();
+                //}
+            }
+        }.start();
+    }
+
+    public void stopCountDown() {
+        mCoundDownStarted = false;
+        if (mCountDown != null) {
+            mCountDown.cancel();
+        }
+    }
+
+	public boolean getCountDownStarted(){
+		return mCoundDownStarted;
+	}
+
+	public void setCountDownStarted(boolean mCoundDownStarted) {
+		mCoundDownStarted = mCoundDownStarted;
+	}
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width,

@@ -10,8 +10,6 @@ import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.provider.Settings;
 
-import alt.android.os.CountDownTimer;
-
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -19,7 +17,6 @@ import java.util.TimerTask;
 public class TimedLight extends Activity {
     public static final String EXTRA_TIMEOUT = "com.pepsdev.timedlight.Timeout";
     public static final String ACTION_ILLUMINATE = "com.pepsdev.timedlight.illuminate";
-    public boolean countDownStarted = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -35,15 +32,12 @@ public class TimedLight extends Activity {
         tv.setOnTiretteListener(new TimedLightView.OnTiretteListener() {
             @Override
             public void tiretted() {
-                stopCountDown();
                 lightItUp();
                 startCountDown();
             }
             @Override
             public void unTiretted() {
                 switchOff();
-
-                stopCountDown();
 
                 synchronized (wl) {
                     if (wl.isHeld())
@@ -76,8 +70,7 @@ public class TimedLight extends Activity {
     public void onPause() {
         super.onPause();
 
-        if (countDownStarted) {
-
+        if (tv.getCountDownStarted()) {
             // if brightness is not max_brightness it would mean that the user
             // changed the screen brightness in between
             if (getBrightness() == MAX_BRIGHTNESS) {
@@ -87,46 +80,16 @@ public class TimedLight extends Activity {
                 if (wl.isHeld())
                     wl.release();
             }
-            countDownStarted = false;
-            countDown.cancel();
+            tv.stopCountDown();
         }
     }
 
     public void startCountDown() {
-        startCountDown((int)tv.getTiretteDuration());
+        tv.startCountDown((int)tv.getTiretteDuration());
     }
 
-    public void startCountDown(long timeout) {
-        Log.d(TAG, "start with timeout " + timeout);
-
-        final long stopAt = System.currentTimeMillis() + timeout;
-
-        countDown = new CountDownTimer(timeout, SPT) {
-            @Override
-            public void onTick(long ms) {
-                tv.tick(ms);
-            }
-
-            @Override
-            public void onFinish() {
-                synchronized (wl) {
-                    if (wl.isHeld())
-                        wl.release();
-                }
-                tv.switchOff();
-                setBrightness(TimedLight.this.restoreBrightness);
-                restoreBrightness = getBrightness();
-            }
-        }.start();
-
-        countDownStarted = true;
-    }
-
-    public void stopCountDown() {
-        countDownStarted = false;
-        if (countDown != null) {
-            countDown.cancel();
-        }
+    public void startCountDown(int coundDown) {
+        tv.startCountDown(coundDown);
     }
 
     private void lightItUp() {
@@ -136,7 +99,6 @@ public class TimedLight extends Activity {
     }
 
     private void switchOff() {
-        tv.switchOff();
         setBrightness(DIM_BRIGHTNESS);
     }
 
@@ -166,14 +128,10 @@ public class TimedLight extends Activity {
     private static final int MAX_BRIGHTNESS = 255;
     private static final int DIM_BRIGHTNESS = 30;
 
-    private static final int SPT = 250; // seconds per tick
-
     private static final String TAG = "com.pepsdev.timedlight.TimedLight";
 
-    private CountDownTimer countDown;
-
     private int restoreBrightness;
-    private TimedLightView tv;
+    public TimedLightView tv;
 
     private PowerManager.WakeLock wl;
 }
