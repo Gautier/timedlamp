@@ -46,7 +46,7 @@ public class TimedLightView extends SurfaceView
     private int height;
     private float mDensity;
 
-    private boolean canDraw  = false;
+    private boolean canDraw = false;
 
     private Bitmap currentLamp;
     private Bitmap lamp;
@@ -91,9 +91,7 @@ public class TimedLightView extends SurfaceView
         setTiretteDuration(ms);
 
         if (handlePos <= HANDLE_POS_DEFAULT) {
-            if (tiretteListener != null) {
-                tiretteListener.unTiretted();
-            }
+            unTiretted();
         }
     }
 
@@ -135,10 +133,13 @@ public class TimedLightView extends SurfaceView
     }
 
     public void lightItUp() {
+        playClick();
         currentLamp = lamp_hl;
+        draw();
     }
 
     public void switchOff() {
+        playClick();
         currentLamp = lamp;
         setTiretteDuration(0);
         draw();
@@ -175,7 +176,7 @@ public class TimedLightView extends SurfaceView
         HANDLE_POS_DEFAULT = (int)(205 * mDensity);
         handlePos = HANDLE_POS_DEFAULT;
         HANDLE_POS_X = (int)(120 * mDensity);
-        HANDLE_POS_MAX = (int)(205 + (85 * 2) * mDensity);
+        HANDLE_POS_MAX = HANDLE_POS_DEFAULT + (int)(155 * mDensity);
 
         touchBox = new Rect((int)(128 * mDensity), (int)(HANDLE_POS_DEFAULT - 90 * mDensity),
                             (int)(290 * mDensity), (int)(lamp.getHeight()));
@@ -208,17 +209,10 @@ public class TimedLightView extends SurfaceView
                     final float y = event.getY();
                     if (touchBox.contains((int)x, (int)y)) {
                         listeningToScroll = true;
+                        stopCountDown();
 
                         if (event.getAction() == MotionEvent.ACTION_UP) {
                             Log.d("TimedLightView", "ACTIONNNNNNNN UP");
-                            playClick();
-                            if (tiretteListener != null) {
-                                if (handlePos > HANDLE_POS_DEFAULT) {
-                                    tiretted();
-                                } else {
-                                    unTiretted();
-                                }
-                            }
                             listeningToScroll = false;
                         }
                     } else {
@@ -251,7 +245,9 @@ public class TimedLightView extends SurfaceView
 
     public void unTiretted() {
         stopCountDown();
-        tiretteListener.unTiretted();
+        if (tiretteListener != null) {
+            tiretteListener.unTiretted();
+        }
         switchOff();
     }
 
@@ -268,10 +264,6 @@ public class TimedLightView extends SurfaceView
 
             @Override
             public void onFinish() {
-                //switchOff();
-                //if (tiretteListener != null) {
-                //    tiretteListener.unTiretted();
-                //}
             }
         }.start();
     }

@@ -33,7 +33,6 @@ public class TimedLight extends Activity {
             @Override
             public void tiretted() {
                 lightItUp();
-                startCountDown();
             }
             @Override
             public void unTiretted() {
