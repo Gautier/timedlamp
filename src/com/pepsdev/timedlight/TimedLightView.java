@@ -13,6 +13,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.media.MediaPlayer;
+import android.widget.Toast;
 
 import alt.android.os.CountDownTimer;
 
@@ -51,6 +52,8 @@ public class TimedLightView extends SurfaceView
     private Bitmap lamp;
     private Bitmap lamp_hl;
     private Bitmap handle;
+    private Bitmap about;
+    private Rect aboutBox;
 	private int handleHeight;
 
     private static final int HANDLE_DURATION = 1000 * 120; // 2 mins
@@ -98,6 +101,7 @@ public class TimedLightView extends SurfaceView
         c.drawARGB(255, 255, 255, 255);
         c.drawBitmap(handle, HANDLE_POS_X, handlePos - handleHeight, null);
         c.drawBitmap(currentLamp, 0, 0, null);
+        c.drawBitmap(about, aboutBox.left, aboutBox.top, null);
     }
 
     private void playClick() {
@@ -161,6 +165,8 @@ public class TimedLightView extends SurfaceView
         currentLamp = lamp;
         handle = BitmapFactory.decodeResource(getContext().getResources(),
                 R.drawable.handle);
+        about = BitmapFactory.decodeResource(getContext().getResources(),
+                R.drawable.about);
 
         handleHeight = handle.getHeight();
 
@@ -217,6 +223,20 @@ public class TimedLightView extends SurfaceView
                         }
                     } else {
                         listeningToScroll = false;
+                    }
+                    if (aboutBox.contains((int)x, (int)y)) {
+                        if (event.getAction() == MotionEvent.ACTION_UP) {
+                            Toast.makeText(getContext(), R.string.about, Toast.LENGTH_LONG).show();
+                        }
+                    }
+                    if (event.getAction() == MotionEvent.ACTION_UP) {
+                        if (tiretteListener != null) {
+                            if (handlePos > HANDLE_POS_DEFAULT) {
+                                tiretted();
+                            } else {
+                                unTiretted();
+                            }
+                        }
                     }
                     return true;
                 }
@@ -277,7 +297,7 @@ public class TimedLightView extends SurfaceView
         width = width;
         height = height;
 
-        touchBox.bottom = height;
+        refreshAboutBox();
     }
 
     @Override
@@ -286,11 +306,27 @@ public class TimedLightView extends SurfaceView
         width = getWidth();
         height = getHeight();
 
+        refreshAboutBox();
+
         draw();
     }
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
         canDraw = false;
+    }
+
+    private void refreshAboutBox() {
+        final int left = width - about.getWidth() * 2;
+        final int top = height - about.getWidth() * 2;
+        final int right = width - about.getWidth();
+        final int bottom = height - about.getWidth();
+        if (aboutBox != null) {
+            aboutBox.left = left;
+            aboutBox.top = top;
+            aboutBox.right = right;
+            aboutBox.bottom = bottom;
+        }
+        aboutBox = new Rect(left, top, right, bottom);
     }
 }
