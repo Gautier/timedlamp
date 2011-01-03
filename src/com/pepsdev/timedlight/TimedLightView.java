@@ -70,8 +70,6 @@ public class TimedLightView extends SurfaceView
     private int handlePos; // bottom of the handle
     private boolean listeningToScroll = false;
 
-    private MediaPlayer mpClick = null;
-
     public void draw() {
         if (!canDraw)
             return;
@@ -99,22 +97,6 @@ public class TimedLightView extends SurfaceView
         c.drawBitmap(handle, HANDLE_POS_X, handlePos - handleHeight, null);
         c.drawBitmap(currentLamp, 0, 0, null);
         c.drawBitmap(about, aboutBox.left, aboutBox.top, null);
-    }
-
-    private void playClick() {
-        if (mpClick == null) {
-            mpClick = MediaPlayer.create(getContext(), R.raw.click);
-            mpClick.start();
-        } else {
-            mpClick.stop();
-            try {
-                mpClick.prepare();
-                mpClick.start();
-            } catch(java.io.IOException e) {
-                Log.w("TimedLightView", "Warning player did not work");
-                Log.w("TimedLightView", e);
-            }
-        }
     }
 
     public long getTiretteDuration() {
@@ -322,5 +304,23 @@ public class TimedLightView extends SurfaceView
             aboutBox.bottom = bottom;
         }
         aboutBox = new Rect(left, top, right, bottom);
+    }
+
+    private MediaPlayer mpClick = null;
+
+    private void playClick() {
+        if (mpClick == null) {
+            mpClick = MediaPlayer.create(getContext(), R.raw.click);
+            mpClick.start();
+        } else {
+            mpClick.stop();
+            try {
+                mpClick.prepare();
+                mpClick.start();
+            } catch(java.io.IOException e) {
+                Log.w("TimedLightView", "Warning player did not work");
+                Log.w("TimedLightView", e);
+            }
+        }
     }
 }
