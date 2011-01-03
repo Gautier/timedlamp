@@ -75,7 +75,6 @@ public class TimedLightView extends SurfaceView
     public void draw() {
         if (!canDraw)
             return;
-        mSurfaceHolder.setKeepScreenOn(true);
         Canvas c = null;
         try {
             c = mSurfaceHolder.lockCanvas();
