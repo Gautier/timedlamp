@@ -46,7 +46,7 @@ public class TimedLightView extends SurfaceView
     private int height;
     private float mDensity;
 
-    private boolean canDraw = false;
+    private boolean mSurfaceCreated = false;
 
     private Bitmap currentLamp;
     private Bitmap lamp;
@@ -71,7 +71,7 @@ public class TimedLightView extends SurfaceView
     private boolean listeningToScroll = false;
 
     public void draw() {
-        if (!canDraw)
+        if (!mSurfaceCreated)
             return;
         Canvas c = null;
         try {
@@ -105,7 +105,7 @@ public class TimedLightView extends SurfaceView
         return msPerPx * (handlePos - HANDLE_POS_DEFAULT);
     }
 
-    public void setTiretteDuration(long ms) {
+    private void setTiretteDuration(long ms) {
         double pxPerMs = (double)(HANDLE_POS_MAX - HANDLE_POS_DEFAULT) /
                          (double) HANDLE_DURATION;
 
@@ -278,7 +278,7 @@ public class TimedLightView extends SurfaceView
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        canDraw = true;
+        mSurfaceCreated = true;
         width = getWidth();
         height = getHeight();
 
@@ -289,7 +289,7 @@ public class TimedLightView extends SurfaceView
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-        canDraw = false;
+        mSurfaceCreated = false;
     }
 
     private void refreshAboutBox() {
