@@ -26,7 +26,7 @@ public class TimedLightWidgetProvider extends AppWidgetProvider {
             intent_30.putExtra(TimedLight.EXTRA_TIMEOUT, 30 * 1000);
             PendingIntent pendingIntent_30 =
                          PendingIntent.getActivity(context, 0, intent_30,
-                                         PendingIntent.FLAG_UPDATE_CURRENT);
+                                         PendingIntent.FLAG_CANCEL_CURRENT);
 
             // Get the layout for the App Widget and attach an on-click listener to the button
             RemoteViews views = new RemoteViews(context.getPackageName(),
@@ -38,7 +38,7 @@ public class TimedLightWidgetProvider extends AppWidgetProvider {
             intent_60.setAction("timestamp" + System.currentTimeMillis());
             intent_60.putExtra(TimedLight.EXTRA_TIMEOUT, 60 * 1000);
             PendingIntent pendingIntent_60 = PendingIntent.getActivity(
-                    context, 0, intent_60, PendingIntent.FLAG_UPDATE_CURRENT);
+                    context, 0, intent_60, PendingIntent.FLAG_CANCEL_CURRENT);
             views.setOnClickPendingIntent(R.id.button_60, pendingIntent_60);
 
 
@@ -47,7 +47,7 @@ public class TimedLightWidgetProvider extends AppWidgetProvider {
             intent_120.putExtra(TimedLight.EXTRA_TIMEOUT, 120000);
 
             PendingIntent pendingIntent_120 = PendingIntent.getActivity(
-                    context, 0, intent_120, PendingIntent.FLAG_UPDATE_CURRENT);
+                    context, 0, intent_120, PendingIntent.FLAG_CANCEL_CURRENT);
             views.setOnClickPendingIntent(R.id.button_120, pendingIntent_120);
 
             // Tell the AppWidgetManager to perform an update on the current App Widget
