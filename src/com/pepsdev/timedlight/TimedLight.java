@@ -45,15 +45,6 @@ public class TimedLight extends Activity {
             }
         });
         setContentView(tv);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        switchOff();
-
-        wl.acquire();
 
         final Intent callingIntent = getIntent();
         if (callingIntent.hasExtra(EXTRA_TIMEOUT)) {
@@ -66,10 +57,19 @@ public class TimedLight extends Activity {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        if (!tv.isCountDownStarted()) {
+            tv.reset();
+        }
+        wl.acquire();
+    }
+
+    @Override
     public void onPause() {
         super.onPause();
 
-        if (tv.getCountDownStarted()) {
+        if (tv.isCountDownStarted()) {
             // if brightness is not max_brightness it would mean that the user
             // changed the screen brightness in between
             if (getBrightness() == MAX_BRIGHTNESS) {

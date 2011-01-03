@@ -139,9 +139,12 @@ public class TimedLightView extends SurfaceView
 
     public void switchOff() {
         playClick();
+        reset();
+    }
+
+    public void reset() {
         currentLamp = lamp;
         setTiretteDuration(0);
-        draw();
     }
 
     public void toggle() {
@@ -274,7 +277,7 @@ public class TimedLightView extends SurfaceView
         }
     }
 
-	public boolean getCountDownStarted(){
+	public boolean isCountDownStarted(){
 		return mCoundDownStarted;
 	}
 
