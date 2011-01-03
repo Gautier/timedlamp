@@ -112,13 +112,13 @@ public class TimedLight extends Activity {
     }
 
     private int getBrightness() {
-        // let's couper la poire en deux
-        int brightness = MAX_BRIGHTNESS / 2;
+        int brightness;
         try {
             brightness = Settings.System.getInt(getContentResolver(),
                                                 Settings.System.SCREEN_BRIGHTNESS);
         } catch (Settings.SettingNotFoundException e)  {
-            // whatever, brightness will be on a safe value
+            // safe value
+            brightness = MAX_BRIGHTNESS / 2;
         }
         return brightness;
     }
