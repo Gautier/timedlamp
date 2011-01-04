@@ -210,7 +210,7 @@ public class TimedLightView extends SurfaceView
                         if (tiretteListener != null) {
                             if (handlePos > HANDLE_POS_DEFAULT) {
                                 tiretted();
-                            } else {
+                            } else if (currentLamp == lamp_on) {
                                 unTiretted();
                             }
                         }
