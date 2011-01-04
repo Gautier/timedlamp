@@ -200,8 +200,6 @@ public class TimedLightView extends SurfaceView
                             Log.d("TimedLightView", "ACTIONNNNNNNN UP");
                             listeningToScroll = false;
                         }
-                    } else {
-                        listeningToScroll = false;
                     }
                     if (aboutBox.contains((int)x, (int)y)) {
                         if (event.getAction() == MotionEvent.ACTION_UP) {
@@ -216,6 +214,7 @@ public class TimedLightView extends SurfaceView
                                 unTiretted();
                             }
                         }
+                        listeningToScroll = false;
                     }
                     return true;
                 }
