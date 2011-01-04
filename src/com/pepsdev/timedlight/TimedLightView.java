@@ -49,8 +49,8 @@ public class TimedLightView extends SurfaceView
     private boolean mSurfaceCreated = false;
 
     private Bitmap currentLamp;
-    private Bitmap lamp;
-    private Bitmap lamp_hl;
+    private Bitmap lamp_off;
+    private Bitmap lamp_on;
     private Bitmap handle;
     private Bitmap about;
     private Rect aboutBox;
@@ -115,7 +115,7 @@ public class TimedLightView extends SurfaceView
 
     public void lightItUp() {
         playClick();
-        currentLamp = lamp_hl;
+        currentLamp = lamp_on;
         draw();
     }
 
@@ -125,12 +125,12 @@ public class TimedLightView extends SurfaceView
     }
 
     public void reset() {
-        currentLamp = lamp;
+        currentLamp = lamp_off;
         setTiretteDuration(0);
     }
 
     public void toggle() {
-        if (currentLamp == lamp_hl) {
+        if (currentLamp == lamp_on) {
             switchOff();
         } else {
             lightItUp();
@@ -142,12 +142,11 @@ public class TimedLightView extends SurfaceView
         mSurfaceHolder = getHolder();
         mSurfaceHolder.addCallback(this);
 
-
-        lamp = BitmapFactory.decodeResource(getContext().getResources(),
+        lamp_off = BitmapFactory.decodeResource(getContext().getResources(),
                 R.drawable.lamp);
-        lamp_hl = BitmapFactory.decodeResource(getContext().getResources(),
+        lamp_on = BitmapFactory.decodeResource(getContext().getResources(),
                 R.drawable.lamp_hl);
-        currentLamp = lamp;
+        currentLamp = lamp_off;
         handle = BitmapFactory.decodeResource(getContext().getResources(),
                 R.drawable.handle);
         about = BitmapFactory.decodeResource(getContext().getResources(),
