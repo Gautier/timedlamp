@@ -161,8 +161,10 @@ public class TimedLightView extends SurfaceView
         HANDLE_POS_X = (int)(120 * mDensity);
         HANDLE_POS_MAX = HANDLE_POS_DEFAULT + (int)(155 * mDensity);
 
-        touchBox = new Rect((int)(128 * mDensity), (int)(HANDLE_POS_DEFAULT - 90 * mDensity),
-                            (int)(290 * mDensity), (int)(lamp.getHeight()));
+        touchBox = new Rect((int)(HANDLE_POS_X - (80 * mDensity)),
+                            (int)(HANDLE_POS_DEFAULT - (120 * mDensity)),
+                            (int)(HANDLE_POS_X + (80 * mDensity)),
+                            (int)(HANDLE_POS_DEFAULT + handleHeight));
 
         gestureDetector = new GestureDetector(
                 new GestureDetector.SimpleOnGestureListener () {
