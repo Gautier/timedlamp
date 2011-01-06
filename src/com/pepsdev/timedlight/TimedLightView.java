@@ -169,7 +169,7 @@ public class TimedLightView extends SurfaceView
 
         HANDLE_POS_DEFAULT = (int)(205 * mDensity);
         handlePos = HANDLE_POS_DEFAULT;
-        HANDLE_POS_X = (int)(120 * mDensity);
+        HANDLE_POS_X = (int)(111 * mDensity);
         HANDLE_POS_MAX = HANDLE_POS_DEFAULT + (int)(155 * mDensity);
 
         touchBox = new Rect((int)(HANDLE_POS_X - (80 * mDensity)),
