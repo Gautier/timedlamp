@@ -1,14 +1,16 @@
 package com.pepsdev.timedlight;
 
 import android.app.Activity;
-import android.os.Bundle;
-import android.content.Intent;
 import android.content.Context;
-import android.os.PowerManager;
-import android.util.Log;
+import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
-import android.util.DisplayMetrics;
+import android.os.PowerManager;
 import android.provider.Settings;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -22,13 +24,20 @@ public class TimedLight extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        DisplayMetrics metrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(metrics);
-
         PowerManager pm = (PowerManager)getSystemService(Context.POWER_SERVICE);
         wl = pm.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK, TAG);
 
-        tv = new TimedLightView(this, metrics.density);
+        setContentView(R.layout.main);
+
+        Button button = (Button)findViewById(R.id.about_button);
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Toast.makeText(TimedLight.this,
+                    R.string.about, Toast.LENGTH_LONG).show();
+            }
+        });
+
+        tv = (TimedLightView)findViewById(R.id.backlight_view);
         tv.setOnTiretteListener(new TimedLightView.OnTiretteListener() {
             @Override
             public void tiretted() {
@@ -44,7 +53,6 @@ public class TimedLight extends Activity {
                 }
             }
         });
-        setContentView(tv);
 
         final Intent callingIntent = getIntent();
         if (callingIntent.hasExtra(EXTRA_TIMEOUT)) {

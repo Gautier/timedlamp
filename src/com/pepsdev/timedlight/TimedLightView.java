@@ -5,15 +5,16 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Paint;
+import android.media.MediaPlayer;
+import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
-import android.media.MediaPlayer;
-import android.widget.Toast;
+import android.view.WindowManager;
 
 import alt.android.os.CountDownTimer;
 
@@ -42,8 +43,6 @@ public class TimedLightView extends SurfaceView
     private CountDownTimer mCountDown;
     public boolean mCoundDownStarted = false;
 
-    private int width;
-    private int height;
     private float mDensity;
 
     private boolean mSurfaceCreated = false;
@@ -52,8 +51,6 @@ public class TimedLightView extends SurfaceView
     private Bitmap lamp_off;
     private Bitmap lamp_on;
     private Bitmap handle;
-    private Bitmap about;
-    private Rect aboutBox;
 	private int handleHeight;
 
     private static final int HANDLE_DURATION = 1000 * 120; // 2 mins
@@ -61,7 +58,6 @@ public class TimedLightView extends SurfaceView
     /* Following constants are density dependants
      * This is why they are not final
      */
-    //private int HANDLE_POS_STOP = 346;
     private int HANDLE_POS_DEFAULT;
     private int HANDLE_POS_X;
     private int HANDLE_POS_MAX;
@@ -96,7 +92,6 @@ public class TimedLightView extends SurfaceView
         c.drawARGB(255, 255, 255, 255);
         c.drawBitmap(handle, HANDLE_POS_X, handlePos - handleHeight, null);
         c.drawBitmap(currentLamp, 0, 0, null);
-        c.drawBitmap(about, aboutBox.left, aboutBox.top, null);
     }
 
     public long getTiretteDuration() {
@@ -137,8 +132,22 @@ public class TimedLightView extends SurfaceView
         }
     }
 
-    public TimedLightView(Context context, final float density) {
+    public TimedLightView(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+        init();
+    }
+
+    public TimedLightView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        init();
+    }
+
+    public TimedLightView(Context context) {
         super(context);
+        init();
+    }
+
+    private void init() {
         mSurfaceHolder = getHolder();
         mSurfaceHolder.addCallback(this);
 
@@ -149,12 +158,14 @@ public class TimedLightView extends SurfaceView
         currentLamp = lamp_off;
         handle = BitmapFactory.decodeResource(getContext().getResources(),
                 R.drawable.handle);
-        about = BitmapFactory.decodeResource(getContext().getResources(),
-                R.drawable.about);
 
         handleHeight = handle.getHeight();
 
-        mDensity = density;
+        final DisplayMetrics metrics = new DisplayMetrics();
+        final WindowManager wMgr = (WindowManager)
+            getContext().getSystemService(Context.WINDOW_SERVICE);
+        wMgr.getDefaultDisplay().getMetrics(metrics);
+        mDensity = metrics.density;
 
         HANDLE_POS_DEFAULT = (int)(205 * mDensity);
         handlePos = HANDLE_POS_DEFAULT;
@@ -195,19 +206,9 @@ public class TimedLightView extends SurfaceView
                     if (touchBox.contains((int)x, (int)y)) {
                         listeningToScroll = true;
                         stopCountDown();
-
-                        if (event.getAction() == MotionEvent.ACTION_UP) {
-                            Log.d("TimedLightView", "ACTIONNNNNNNN UP");
-                            listeningToScroll = false;
-                        }
-                    }
-                    if (aboutBox.contains((int)x, (int)y)) {
-                        if (event.getAction() == MotionEvent.ACTION_UP) {
-                            Toast.makeText(getContext(), R.string.about, Toast.LENGTH_LONG).show();
-                        }
                     }
                     if (event.getAction() == MotionEvent.ACTION_UP) {
-                        if (tiretteListener != null) {
+                        if (tiretteListener != null && listeningToScroll) {
                             if (handlePos > HANDLE_POS_DEFAULT) {
                                 tiretted();
                             } else if (currentLamp == lamp_on) {
@@ -236,7 +237,6 @@ public class TimedLightView extends SurfaceView
     }
 
     public void startCountDown(long timeout) {
-        Log.d(TAG, "start with timeout " + timeout);
         final long stopAt = System.currentTimeMillis() + timeout;
         mCoundDownStarted = true;
 
@@ -270,40 +270,17 @@ public class TimedLightView extends SurfaceView
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width,
             int height) {
-        width = width;
-        height = height;
-
-        refreshAboutBox();
     }
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         mSurfaceCreated = true;
-        width = getWidth();
-        height = getHeight();
-
-        refreshAboutBox();
-
         draw();
     }
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
         mSurfaceCreated = false;
-    }
-
-    private void refreshAboutBox() {
-        final int left = width - about.getWidth() * 2;
-        final int top = height - about.getWidth() * 2;
-        final int right = width - about.getWidth();
-        final int bottom = height - about.getWidth();
-        if (aboutBox != null) {
-            aboutBox.left = left;
-            aboutBox.top = top;
-            aboutBox.right = right;
-            aboutBox.bottom = bottom;
-        }
-        aboutBox = new Rect(left, top, right, bottom);
     }
 
     private MediaPlayer mpClick = null;

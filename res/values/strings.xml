@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">TimedLight</string>
-    <string name="about">TimedLight forever, \n Yeah \n pull the handle and it will light up!</string>
+    <string name="about">TimedLight or timy light,\n
+Pull the handle, the lamp will light up\n
+Drawings by Marine RA, Code by Gautier Hayoun</string>
 </resources>
