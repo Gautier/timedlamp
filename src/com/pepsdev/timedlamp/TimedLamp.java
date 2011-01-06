@@ -1,4 +1,4 @@
-package com.pepsdev.timedlight;
+package com.pepsdev.timedlamp;
 
 import android.app.Activity;
 import android.content.Context;
@@ -16,9 +16,9 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 
-public class TimedLight extends Activity {
-    public static final String EXTRA_TIMEOUT = "com.pepsdev.timedlight.Timeout";
-    public static final String ACTION_ILLUMINATE = "com.pepsdev.timedlight.illuminate";
+public class TimedLamp extends Activity {
+    public static final String EXTRA_TIMEOUT = "com.pepsdev.timedlamp.Timeout";
+    public static final String ACTION_ILLUMINATE = "com.pepsdev.timedlamp.illuminate";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -32,13 +32,13 @@ public class TimedLight extends Activity {
         Button button = (Button)findViewById(R.id.about_button);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Toast.makeText(TimedLight.this,
+                Toast.makeText(TimedLamp.this,
                     R.string.about, Toast.LENGTH_LONG).show();
             }
         });
 
-        tv = (TimedLightView)findViewById(R.id.backlight_view);
-        tv.setOnTiretteListener(new TimedLightView.OnTiretteListener() {
+        tv = (TimedLampView)findViewById(R.id.backlamp_view);
+        tv.setOnTiretteListener(new TimedLampView.OnTiretteListener() {
             @Override
             public void tiretted() {
                 lightItUp();
@@ -135,10 +135,10 @@ public class TimedLight extends Activity {
     private static final int MAX_BRIGHTNESS = 255;
     private static final int DIM_BRIGHTNESS = 30;
 
-    private static final String TAG = "com.pepsdev.timedlight.TimedLight";
+    private static final String TAG = "com.pepsdev.timedlamp.TimedLamp";
 
     private int restoreBrightness;
-    public TimedLightView tv;
+    public TimedLampView tv;
 
     private PowerManager.WakeLock wl;
 }

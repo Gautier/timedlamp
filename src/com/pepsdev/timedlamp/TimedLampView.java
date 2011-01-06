@@ -1,4 +1,4 @@
-package com.pepsdev.timedlight;
+package com.pepsdev.timedlamp;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -21,10 +21,10 @@ import alt.android.os.CountDownTimer;
 import android.graphics.Rect;
 
 
-public class TimedLightView extends SurfaceView
+public class TimedLampView extends SurfaceView
     implements SurfaceHolder.Callback {
 
-    private static final String TAG = "com.pepsdev.timedlight";
+    private static final String TAG = "com.pepsdev.timedlamp";
     private static final int SPT = 250; // seconds per tick
 
     public interface OnTiretteListener {
@@ -124,25 +124,17 @@ public class TimedLightView extends SurfaceView
         setTiretteDuration(0);
     }
 
-    public void toggle() {
-        if (currentLamp == lamp_on) {
-            switchOff();
-        } else {
-            lightItUp();
-        }
-    }
-
-    public TimedLightView(Context context, AttributeSet attrs, int defStyle) {
+    public TimedLampView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init();
     }
 
-    public TimedLightView(Context context, AttributeSet attrs) {
+    public TimedLampView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public TimedLightView(Context context) {
+    public TimedLampView(Context context) {
         super(context);
         init();
     }
@@ -295,8 +287,8 @@ public class TimedLightView extends SurfaceView
                 mpClick.prepare();
                 mpClick.start();
             } catch(java.io.IOException e) {
-                Log.w("TimedLightView", "Warning player did not work");
-                Log.w("TimedLightView", e);
+                Log.w("TimedLampView", "Warning player did not work");
+                Log.w("TimedLampView", e);
             }
         }
     }

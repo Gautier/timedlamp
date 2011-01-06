@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">TimedLight</string>
-    <string name="about"><b>TimedLight</b>\nPull the handle, the lamp will light up\nDrawings by Marine RA, Code by Gautier Hayoun</string>
+    <string name="app_name">Timed lamp</string>
+    <string name="about"><b>Timed lamp</b>\n\nPull the handle, the lamp will light up for a limited time\n\nLicense : MIT\nDrawings by Marine RA, Code by Gautier Hayoun</string>
 </resources>

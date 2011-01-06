@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      package="com.pepsdev.timedlight"
+      package="com.pepsdev.timedlamp"
       android:versionCode="1"
       android:versionName="1.0">
     <application android:label="@string/app_name" android:icon="@drawable/icon">
-        <activity android:name="TimedLight"
+        <activity android:name="TimedLamp"
                   android:theme="@android:style/Theme.NoTitleBar"
                   android:label="@string/app_name"
                   android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <action android:name="com.pepsdev.timedlight.illuminate" />
+                <action android:name="com.pepsdev.timedlamp.illuminate" />
                 <category android:name="android.intent.category.LAUNCHER" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <receiver android:name="TimedLightWidgetProvider">
+        <receiver android:name="TimedLampWidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
             <meta-data android:name="android.appwidget.provider"
-                       android:resource="@xml/timedlight_widget_info" />
+                       android:resource="@xml/timedlamp_widget_info" />
         </receiver>
     </application>
     <uses-sdk android:minSdkVersion="4"

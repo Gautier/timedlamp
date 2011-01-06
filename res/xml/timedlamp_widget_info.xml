@@ -3,5 +3,5 @@
     android:minWidth="148dp"
     android:minHeight="49dp"
     android:updatePeriodMillis="86400000"
-    android:initialLayout="@layout/timedlight_widget_layout">
+    android:initialLayout="@layout/timedlamp_widget_layout">
 </appwidget-provider>
