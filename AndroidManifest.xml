@@ -3,10 +3,9 @@
       package="com.pepsdev.timedlight"
       android:versionCode="1"
       android:versionName="1.0">
-    <application android:label="@string/app_name">
+    <application android:label="@string/app_name" android:icon="@drawable/icon">
         <activity android:name="TimedLight"
                   android:theme="@android:style/Theme.NoTitleBar"
-                  android:icon="@drawable/icon"
                   android:label="@string/app_name"
                   android:screenOrientation="portrait">
             <intent-filter>
