@@ -255,10 +255,6 @@ public class TimedLampView extends SurfaceView
 		return mCoundDownStarted;
 	}
 
-	public void setCountDownStarted(boolean mCoundDownStarted) {
-		mCoundDownStarted = mCoundDownStarted;
-	}
-
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width,
             int height) {
