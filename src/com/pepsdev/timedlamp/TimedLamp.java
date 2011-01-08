@@ -83,7 +83,7 @@ public class TimedLamp extends Activity {
             if (getBrightness() == MAX_BRIGHTNESS) {
                 setBrightness(restoreBrightness);
             }
-            synchronized (this) {
+            synchronized (wl) {
                 if (wl.isHeld())
                     wl.release();
             }
