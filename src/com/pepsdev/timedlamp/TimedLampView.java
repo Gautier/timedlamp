@@ -21,7 +21,6 @@ import android.view.WindowManager;
 public class TimedLampView extends SurfaceView
     implements SurfaceHolder.Callback {
 
-    private static final String TAG = "com.pepsdev.timedlamp";
     private static final int SPT = 250; // seconds per tick
 
     public interface OnTiretteListener {
@@ -226,7 +225,6 @@ public class TimedLampView extends SurfaceView
     }
 
     public void startCountDown(long timeout) {
-        final long stopAt = System.currentTimeMillis() + timeout;
         mCoundDownStarted = true;
 
         mCountDown = new CountDownTimer(timeout, SPT) {
