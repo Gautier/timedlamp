@@ -62,7 +62,7 @@ public class TimedLampView extends SurfaceView
     private int handlePos; // bottom of the handle
     private boolean listeningToScroll = false;
 
-    public void draw() {
+    private void draw() {
         if (!mSurfaceCreated)
             return;
         Canvas c = null;
@@ -76,7 +76,7 @@ public class TimedLampView extends SurfaceView
         }
     }
 
-    public void tick(long ms) {
+    private void tick(long ms) {
         setTiretteDuration(ms);
 
         if (handlePos <= HANDLE_POS_DEFAULT) {
@@ -84,7 +84,7 @@ public class TimedLampView extends SurfaceView
         }
     }
 
-    public void doDraw(Canvas c) {
+    private void doDraw(Canvas c) {
         c.drawARGB(255, 255, 255, 255);
         c.drawBitmap(handle, HANDLE_POS_X, handlePos - handleHeight, null);
         c.drawBitmap(currentLamp, 0, 0, null);
@@ -210,13 +210,13 @@ public class TimedLampView extends SurfaceView
         });
     }
 
-    public void tiretted() {
+    private void tiretted() {
         stopCountDown();
         tiretteListener.tiretted();
         startCountDown((int)getTiretteDuration());
     }
 
-    public void unTiretted() {
+    private void unTiretted() {
         stopCountDown();
         if (tiretteListener != null) {
             tiretteListener.unTiretted();
