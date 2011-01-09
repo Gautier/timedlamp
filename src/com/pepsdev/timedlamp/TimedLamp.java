@@ -19,11 +19,10 @@ public class TimedLamp extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.main);
 
         PowerManager pm = (PowerManager)getSystemService(Context.POWER_SERVICE);
         wl = pm.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK, TAG);
-
-        setContentView(R.layout.main);
 
         Button button = (Button)findViewById(R.id.about_button);
         button.setOnClickListener(new View.OnClickListener() {
