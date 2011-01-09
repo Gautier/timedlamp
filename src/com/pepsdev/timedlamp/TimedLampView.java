@@ -1,10 +1,11 @@
 package com.pepsdev.timedlamp;
 
+import alt.android.os.CountDownTimer;
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Rect;
 import android.media.MediaPlayer;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
@@ -15,10 +16,6 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.WindowManager;
-
-import alt.android.os.CountDownTimer;
-
-import android.graphics.Rect;
 
 
 public class TimedLampView extends SurfaceView
