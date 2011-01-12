@@ -94,7 +94,7 @@ public class TimedLamp extends Activity {
         tv.startCountDown(coundDown);
     }
 
-    private void lightItUp() {
+    public void lightItUp() {
         tv.lightItUp();
         restoreBrightness = getBrightness();
         setBrightness(MAX_BRIGHTNESS);

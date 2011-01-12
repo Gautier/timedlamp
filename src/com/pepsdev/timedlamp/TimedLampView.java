@@ -57,7 +57,7 @@ public class TimedLampView extends SurfaceView
     private int HANDLE_POS_DEFAULT;
     private int HANDLE_POS_X;
     private int HANDLE_POS_MAX;
-    private Rect touchBox;
+    public Rect touchBox;
 
     private int handlePos; // bottom of the handle
     private boolean listeningToScroll = false;
